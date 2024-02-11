@@ -1,0 +1,61 @@
+#!/usr/bin/python
+
+
+# Import Module
+import stack_modules_v1_4 as t
+import sys
+
+
+
+
+
+# Main body
+
+if __name__=="__main__":
+
+	function = sys.argv[1]
+	
+	# Checking if the called function is database backup
+	
+	if function == "database_backup":
+	
+		# Variable declaration
+		schema=sys.argv[2]
+		runner=sys.argv[3]
+		directory=sys.argv[4]
+
+		# Calling the database backup function
+		t.database_backup(schema, runner, directory)
+
+		# Checking if the called function is the file or diretory copy
+
+	elif function == "copy":
+
+		# Variable declaration
+		f_d_to_copy=sys.argv[2]
+		dest_path=sys.argv[3]
+
+		# Calling the directory copy function
+		t.f_d_copy(f_d_to_copy, dest_path)
+	
+	else:
+		print("Function Unknown")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

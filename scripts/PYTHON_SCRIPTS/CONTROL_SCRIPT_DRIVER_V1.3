@@ -1,0 +1,61 @@
+#!/usr/bin/python
+
+
+# Import Module
+import stack_modules_v1_3 as t
+import sys
+
+
+
+
+
+# Main body
+
+if __name__=="__main__":
+
+	function = sys.argv[1]
+	
+	# Checking if the called function is database backup
+	
+	if function == "database_backup":
+	
+		# Variable declaration
+		schema="stack_temp"
+		runner="Olamide"
+		directory="DATA_PUMP_DIR"
+
+		# Calling the database backup function
+		t.database_backup(schema, runner, directory)
+
+		# Checking if the called function is the file or diretory copy
+
+	elif function == "copy":
+
+		# Variable declaration
+		f_d_to_copy="/home/oracle/scripts/practicedir_ola_sep23/olamide_training"
+		dest_path="/home/oracle/scripts/practicedir_ola_sep23/backup/olamide_training"
+
+		# Calling the directory copy function
+		t.f_d_copy(f_d_to_copy, dest_path)
+	
+	else:
+		print("Function Unknown")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

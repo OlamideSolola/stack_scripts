@@ -1,0 +1,82 @@
+#!/usr/bin/python
+
+
+# Import Module
+import stack_modules_v1_5 as t
+import sys
+
+
+
+
+
+# Main body
+
+if __name__=="__main__":
+	
+	# Variable declaration
+	count_args=len(sys.argv)
+	num_commlinarg=count_args - 1
+
+	function = sys.argv[1]
+	
+	# Checking if the called function is database backup and we have the right number of command line arguments
+	
+	if function == "database_backup" and num_commlinarg == 4:
+	
+		# Variable declaration
+		schema=sys.argv[2]
+		runner=sys.argv[3]
+		directory=sys.argv[4]
+
+		# Calling the database backup function
+		t.database_backup(schema, runner, directory)
+
+	# Checking if the called function is database backup and we have the wrong number of command line arguments
+
+	elif function == "database_backup" and num_commlinarg != 4:
+		
+		# Printing the usage to the user 
+
+		print("USAGE: To do a database backup, you need to specify a function, a schema, a runner and the directory")
+		print("EG python CONTROL_SCRIPT_DRIVER_V1.5 database_backup schema runner directory") 
+
+	# Checking if the called function is the file or diretory copy and we have the right number of command line arguments
+
+	elif function == "copy" and num_commlinarg == 3:
+
+		# Variable declaration
+		f_d_to_copy=sys.argv[2]
+		dest_path=sys.argv[3]
+
+		# Calling the directory copy function
+		t.f_d_copy(f_d_to_copy, dest_path)
+
+	# Checking if the called function is the file or diretory copy and we have the right number of command line arguments
+	elif function == "copy" and num_commlinarg != 3:
+
+	# Printing the usage to the user
+
+		print("USAGE: To do a file or directory copy you need to specify the function, the source path, and the destination path")
+		print("EG python CONTROL_SCRIPT_DRIVER_V1.5 copy source_path destination_path")	
+
+	else:
+		print("Function Unknown")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,153 @@
+#!/usr/bin/python
+
+
+# Import Module
+import stack_modules_v1_7 as t
+import sys
+
+
+
+
+
+# Main body
+
+if __name__=="__main__":
+	
+	# Variable declaration
+	count_args=len(sys.argv)
+	num_commlinarg=count_args - 1	
+
+	# Checking if no command line arguments are passed
+	if num_commlinarg == 0:
+
+		# Prompting the user for a function
+		entered_function=input("Please enter a function: ")
+
+		# Checking if entered function is database backup
+		if entered_function == "database_backup":
+		 
+			# Prompting the user for the arguments to perform a database backup
+			entered_schema=input("Please enter Schema to backup: ")
+			entered_runner=input("Please enter runner: ")
+			entered_directory=input("Please enter directory: ")
+
+			schema=entered_schema
+			runner=entered_runner
+			directory=entered_directory
+		
+			# Calling the database backup function
+		
+			t.database_backup(schema, runner, directory)
+
+		# Checking if entered function is copy
+		elif entered_function == "copy":
+			# Prompting user for the arguments to perform a file or directory copy
+			entered_source=input("Please enter the full path of the file or directory to copy: ")
+			entered_destination=input("Please enter the full path of the destination: ")
+			
+			f_d_to_copy=entered_source
+			dest_path=entered_destination
+			
+			# Calling the copy function
+			t.f_d_copy(f_d_to_copy, dest_path)
+
+		# Cheking if the entered function is disk usage
+		elif entered_function == "disk_usage":
+			
+			# Prompting user for the necessary arguments for disk utiliation check
+			entered_disk=input("Please enter disk: ")
+			enetered_threshold=input("Please enter threshold: ")
+		
+			disk_path=entered_disk
+			threshold=enetered_threshold
+
+			# Calling the disk utilization function
+			t.disk_maintenance_check_on_prem(disk_path, threshold)
+	
+		else:
+			print("Function Unknown")
+
+
+	elif num_commlinarg > 0:
+
+		# Variable declaration
+		function=sys.argv[1]
+
+		# Checking if the called function is database backup and we have the right number of command line arguments
+	
+		if function == "database_backup" and num_commlinarg == 4:
+	
+			# Variable declaration
+			schema=sys.argv[2]
+			runner=sys.argv[3]
+			directory=sys.argv[4]
+
+			# Calling the database backup function
+			t.database_backup(schema, runner, directory)
+
+		# Checking if the called function is database backup and we have the wrong number of command line arguments
+
+		elif function == "database_backup" and num_commlinarg != 4:
+		
+			# Printing the usage to the user 
+
+			print("USAGE: To do a database backup, you need to specify a function, a schema, a runner and the directory")
+			print("EG python CONTROL_SCRIPT_DRIVER_V1.5 database_backup schema runner directory") 
+
+		# Checking if the called function is the file or diretory copy and we have the right number of command line arguments
+
+		elif function == "copy" and num_commlinarg == 3:
+
+			# Variable declaration
+			f_d_to_copy=sys.argv[2]
+			dest_path=sys.argv[3]
+
+			# Calling the directory copy function
+			t.f_d_copy(f_d_to_copy, dest_path)
+
+		# Checking if the called function is the file or diretory copy and we have the right number of command line arguments
+		elif function == "copy" and num_commlinarg != 3:
+
+		# Printing the usage to the user
+
+			print("USAGE: To do a file or directory copy you need to specify the function, the source path, and the destination path")
+			print("EG python CONTROL_SCRIPT_DRIVER_V1.5 copy source_path destination_path")	
+
+		# Checking if the called function is the disk utilization function and we have the right no of command line arguments
+		elif function == "disk_usage" and num_commlinarg == 3:
+
+			# Variable declaration
+			disk_path=sys.argv[2]
+			threshold=sys.argv[3]
+
+			# Calling the disk maintenance funtion
+			t.disk_maintenance_check_on_prem(disk_path, threshold)
+
+		# Checking if the called function is the disk utilization function and we have the wrong number of command line argument
+		elif function == "disk_usage" and num_commlinarg != 3:
+
+			# Printing usage to the user
+			print("USAGE: To check disk usage please enter the function, the disk to check and the threshold")
+			print("EG: python CONTROL_SCRIPT_DRIVER_V1.5 disk_usage /u01 50")
+		
+		else:
+			print("Function Unknown")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
