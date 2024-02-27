@@ -1,0 +1,490 @@
+#!/usr/bin/python
+
+
+# Import Module
+import stack_modules_v1_25 as t
+import sys,time,datetime
+
+
+
+
+
+# Main body
+
+if __name__=="__main__":
+	
+	# Variable declaration
+	count_args=len(sys.argv)
+	num_commlinarg=count_args - 1	
+
+	# Checking if no command line arguments are passed
+	if num_commlinarg == 0:
+
+		# Prompting the user for a function
+		entered_function=input("Please enter a function: ")
+
+		# Checking if entered function is database backup
+		if entered_function == "database_backup":
+		 
+			# Prompting the user for the arguments to perform a database backup
+			entered_schema=input("Please enter Schema to backup: ")
+			entered_runner=input("Please enter runner: ")
+			entered_directory=input("Please enter directory: ")
+
+			schema=entered_schema
+			runner=entered_runner
+			directory=entered_directory
+		
+			# Calling the database backup function
+		
+			t.database_backup(args1=schema, args2=runner, args3=directory)
+
+		# Checking if entered function is copy
+		elif entered_function == "copy":
+			# Prompting user for the arguments to perform a file or directory copy
+			entered_source=input("Please enter the full path of the file or directory to copy: ")
+			entered_destination=input("Please enter the full path of the destination: ")
+			
+			f_d_to_copy=entered_source
+			dest_path=entered_destination
+			
+			# Calling the copy function
+			t.f_d_copy(args1=f_d_to_copy, args2=dest_path)
+
+		# Cheking if the entered function is disk usage
+		elif entered_function == "disk_usage":
+			
+			# Prompting user for the necessary arguments for disk utiliation check
+			entered_disk=input("Please enter disk: ")
+			enetered_threshold=input("Please enter threshold: ")
+		
+			disk_path=entered_disk
+			threshold=enetered_threshold
+
+			# Calling the disk utilization function
+			t.disk_maintenance_check_on_prem(args1=disk_path, args2=threshold)
+
+		# Checking if the entered function is Gzip
+		elif entered_function == "Gzip":
+
+			# Prompting user for the necessary arguments to zip a file
+			entered_file=input("Please eneter file to gzip: ")
+
+			file_to_zip=entered_file
+
+			# Calling the gzip function
+			t.G_Zipp(args1=file_to_zip)
+
+		# Checking if the entered function is unzip_gzip
+		elif entered_function == "unzip_gzip":
+
+			# Prompting user for the necessary command line argument to unzip a gzipped file
+			entered_file_to_unzip=input("Please enter file to unzip: ")
+
+			file_to_unzip=entered_file_to_unzip
+
+			# Calling the unzip function	
+			t.unzip_gzipp(args1=file_to_unzip)
+
+		# Checking if the entered function is database Import
+		elif entered_function == "database_import":
+
+			# Prompting user for the necessary information for a database import
+			entered_schema=input("Enter Schema: ")
+			entered_dumpfile=input("Enter gziped dumpfile: ")
+			entered_directory=input("Enter directory: ")
+			entered_runner=input("Enter runner: ")
+
+			schema=entered_schema
+			dumpfile=entered_dumpfile
+			directory=entered_directory
+			runner=entered_runner
+
+			# Calling the database import function
+			t.database_import(args1=schema, args2=dumpfile, args3=directory, args4=runner)
+
+		elif entered_function == "aws_create_user":
+			
+			entered_service=input("Enter AWS Service: ")
+			entered_username=input("Enter username: ")			
+
+			t.aws_create_user(service = entered_service, user = entered_username)
+		
+
+		else:
+			print("Function Unknown")
+
+
+	elif num_commlinarg > 0:
+
+		# Variable declaration
+		function=sys.argv[1]
+
+		# Checking if the called function is database backup and we have the right number of command line arguments
+	
+		if function == "Export" and num_commlinarg == 5:
+	
+			# Variable declaration
+			status = ["Running","Completed", "Error"]
+			status_before_job_run, status_after_job_run, status_job_error = status
+			current_datetime=datetime.datetime.now()
+			current_datetime_formated=current_datetime.strftime("%d-%b-%y %I:%M:%S %p")
+			schema=sys.argv[2]
+			runner=sys.argv[3]
+			directory=sys.argv[4]
+			OP_NAME_INS = function
+			RUNNER_INS = runner
+			OP_TYPE_INS = sys.argv[5]			
+			STATUS_INS = status_before_job_run
+			OP_STARTTIME_INS = current_datetime_formated
+			OP_ENDTIME_INS = current_datetime_formated
+			
+			# Calling the database backup function
+			t.database_backup(args1=schema, args2=runner, args3=directory, args15=STATUS_INS, args11=OP_NAME_INS, args12=OP_STARTTIME_INS, args14= RUNNER_INS, args16=OP_TYPE_INS, args17=OP_ENDTIME_INS)
+
+		# Checking if the called function is database backup and we have the wrong number of command line arguments
+
+		elif function == "Export" and num_commlinarg != 5:
+		
+			# Printing the usage to the user 
+
+			print("USAGE: To do a database backup, you need to specify a function, a schema, a runner and the directory")
+			print("EG python CONTROL_SCRIPT_DRIVER_V1.5 database_backup schema runner directory") 
+
+		# Checking if the called function is the file or diretory copy and we have the right number of command line arguments
+
+		elif function == "File_Directory_Copy" and num_commlinarg == 5:
+			
+			
+			# Variable declaration
+
+			status = ["Running","Completed", "Error"]
+			status_before_job_run, status_after_job_run, status_job_error = status
+			current_datetime=datetime.datetime.now()
+			current_datetime_formated=current_datetime.strftime("%d-%b-%y %I:%M:%S %p")
+			STATUS_INS = status_after_job_run
+			OP_NAME_INS = sys.argv[1]
+			OP_STARTTIME_INS = current_datetime_formated
+			RUNNER_INS = sys.argv[4]
+			OP_TYPE_INS = sys.argv[5]
+			OP_ENDTIME_INS = current_datetime_formated		
+			f_d_to_copy=sys.argv[2]
+			dest_path=sys.argv[3]
+			TO_EMAIL="stackcloud11@mkitconsulting.net"
+			SUBJECT="File Successfully Copied Ola"
+			BODY="The file was succesfully copied"
+			FROM="oracle@MKIT-DEV-OEM.localdomain"
+
+			# Calling the directory copy function
+			t.f_d_copy(args1=f_d_to_copy, args2=dest_path, args15=STATUS_INS, args11=OP_NAME_INS, args12=OP_STARTTIME_INS, args14= RUNNER_INS, args16=OP_TYPE_INS, args17=OP_ENDTIME_INS)
+
+
+		# Checking if the called function is the file or diretory copy and we have the right number of command line arguments
+		elif function == "File_Directory_Copy" and num_commlinarg != 5:
+
+		# Printing the usage to the user
+
+			print("USAGE: To do a file or directory copy you need to specify the function, the source path, and the destination path")
+			print("EG python CONTROL_SCRIPT_DRIVER_V1.5 copy source_path destination_path")	
+
+		# Checking if the called function is the disk utilization function and we have the right no of command line arguments
+		elif function == "disk_usage" and num_commlinarg == 4:
+
+			# Variable declaration
+			disk_path=sys.argv[2]
+			warning_threshold=sys.argv[3]
+			critical_threshold=sys.argv[4]
+			
+			# Calling the disk maintenance funtion
+			t.disk_maintenance_check_on_prem(args1=disk_path, args2=warning_threshold, args3=critical_threshold)
+
+		# Checking if the called function is the disk utilization function and we have the wrong number of command line argument
+		elif function == "disk_usage" and num_commlinarg != 4:
+
+			# Printing usage to the user
+			print("USAGE: To check disk usage please enter the function, the disk to check and the warning and critical threshold")
+			print("EG: python CONTROL_SCRIPT_DRIVER_V1.5 disk_usage /u01 50")
+
+		# Checking if the called function is the zip function and we have the right number of command line argument
+		elif function == "Gzip" and num_commlinarg == 2:
+
+			# Variable declaration
+			file_to_zip = sys.argv[2]
+
+			# Calling the gzip function
+			t.G_Zipp(args1=file_to_zip)
+
+		# Checking if the called function is zip and we have the wrong number of command line argument
+		elif function == "Gzip" and num_commlinarg != 2:
+	
+			# printing the usage 
+			print("USAGE: To Gzip a file, enter the function and the full path of the file to zip")
+
+		# Checking if the called function is unzip and we have the right number of command line argument
+		elif function == "unzip_gzip" and num_commlinarg == 2:
+
+			# Variable Declaration
+			file_to_unzip = sys.argv[2]
+			
+			# Calling the unzip function
+			t.unzip_gzipp(args1=file_to_unzip)
+
+		# Checking if the called function is unzip and we have the wrong command line argument
+		elif function == "unzip_gzip" and num_commlinarg != 2:
+
+			# Printing the usage
+			print("USAGE: To unzip a gzip file, you need to specify the function and the full path of the file to unzip")
+
+		# Checking if the called function is database import and we have the right number of command line argument
+		elif function == "Import" and num_commlinarg == 6:
+
+			# Variable declaration
+			schema=sys.argv[2]
+			dumpfile=sys.argv[3]
+			directory=sys.argv[4]
+			runner=sys.argv[5]
+			status = ["Running","Completed", "Error"]
+			status_before_job_run, status_after_job_run, status_job_error = status
+			STATUS_INS = status_before_job_run
+			current_datetime=datetime.datetime.now()
+			current_datetime_formated=current_datetime.strftime("%d-%b-%y %I:%M:%S %p")
+			OP_NAME_INS = sys.argv[1]
+			OP_STARTTIME_INS= current_datetime_formated
+			OP_ENDTIME_INS = current_datetime_formated
+			RUNNER_INS = runner
+			OP_TYPE_INS = sys.argv[6]
+	
+
+			# Calling the database import function
+			t.database_import(args1=schema, args4=dumpfile, args3=directory, args2=runner, args15=STATUS_INS, args11=OP_NAME_INS, args12=OP_STARTTIME_INS, args14= RUNNER_INS, args16=OP_TYPE_INS, args17=OP_ENDTIME_INS)
+		
+			
+
+		# Checking if the called function is database import and we have the wrong number of command line argument
+		elif function == "Import" and num_commlinarg != 6:
+
+			# printing usage 
+			print("USAGE: to do a database import you need to enter the function, the schema, the gzipped dumpfile, the directory and the runner")
+
+		elif function == "STACK_EMAIL" and num_commlinarg == 4:
+		
+			# Variable declaration
+			TO_EMAIL=sys.argv[2]
+			SUBJECT=sys.argv[3]
+			BODY=sys.argv[4]
+			FROM="oracle@MKIT-DEV-OEM.localdomain"
+			
+			# Calling the email function
+			t.STACK_EMAIL(TO_EMAIL, SUBJECT, BODY, FROM)
+
+		
+		# Checking if the called function is data migration function and we have the right number of CLA
+		elif function == "Data_Migration" and num_commlinarg == 5:
+
+			# Variable declaration
+			status = ["Running","Completed", "Error"]
+			status_before_job_run, status_after_job_run, status_job_error = status
+			current_datetime=datetime.datetime.now()
+			current_datetime_formated=current_datetime.strftime("%d-%b-%y %I:%M:%S %p")
+			STATUS_INS = status_before_job_run
+			OP_STARTTIME_INS = current_datetime_formated
+			OP_ENDTIME_INS = current_datetime_formated
+			OP_NAME_INS = sys.argv[1]
+			schema=sys.argv[2]
+			runner=sys.argv[3]
+			directory=sys.argv[4]
+			RUNNER_INS = runner
+			OP_TYPE_INS = sys.argv[5]
+
+			# Calling the data migration function
+			t.data_migration(args1=schema, args2=runner, args3=directory, args15=STATUS_INS, args11=OP_NAME_INS, args12=OP_STARTTIME_INS, args14= RUNNER_INS, args16=OP_TYPE_INS, args17=OP_ENDTIME_INS)
+
+		# Checking if the called function is data_migration and we have the wrong number of CLA
+		elif function == "Data_Migration" and num_commlinarg != 5:
+			print("USAGE: To do a Data Migration, you the the schema to be migrated, the runner and the the directory")	
+
+		
+		#Checking if the called function is db_connection
+		elif function == "db_connection" and num_commlinarg == 5:
+		
+			# Variable declaration
+			status = ["Running","Completed", "Error"]
+			status_before_job_run, status_after_job_run, status_job_error = status
+			current_datetime=datetime.datetime.now()
+			current_datetime_formated=current_datetime.strftime("%d-%b-%y %I:%M:%S %p")
+			STATUS_INS = status_after_job_run
+			OP_ID_INS = sys.argv[2]
+			OP_NAME_INS = sys.argv[3]
+			OP_STARTTIME_INS = date_time
+			RUNNER_INS = sys.argv[4]
+			OP_TYPE_INS	= sys.argv[5]
+			OP_ENDTIME_INS = date_time
+
+
+			# Calling the function
+			t.db_connection(args15=STATUS_INS, args10=OP_ID_INS, args11=OP_NAME_INS, args12=OP_STARTTIME_INS, args14= RUNNER_INS, args16=OP_TYPE_INS, args17=OP_ENDTIME_INS)
+
+
+		# Checking if the called function is db_connection and we have the wrong number of CLA		
+		elif function == "db_connection" and num_commlinarg != 5:
+			print("USAGE")		
+	
+		
+		# Checking if the called function is aws create user and we have the right number of CLA
+		elif function == "aws_create_user" and num_commlinarg == 2:
+		
+		
+			#Variable declaration
+			user =sys.argv[2]
+
+			# Calling the aws create user function
+			t.aws_create_user(service="iam", user=sys.argv[2])
+		
+
+		# Checking if the called function is aws create user  and we have the wrong number of CLA
+		
+		elif function == "aws_create_user" and num_commlinarg != 2:
+			print("USAGE")
+
+		
+		# Checking if the called function is aws create group function and we have the right number of command line argument
+
+		elif function == "aws_create_group" and num_commlinarg == 2:
+
+			# Variable Declaration
+			service="iam"
+			GroupName = sys.argv[2]
+
+
+			# Calling the group creation function
+			t.create_aws_group(service="iam", GroupName=sys.argv[2])
+	
+		# Checking if the called function is aws create group function and we have the wrong number of command line argument
+
+		elif function == "aws_create_group" and num_commlinarg != 2:
+
+			print("USAGE")
+
+
+		# Checking if the called function is attach_user_to_group function and we have the wrong number of command line argument		
+		elif function == "attach_user_to_group" and num_commlinarg == 3:
+
+			
+			#Variable Declaration
+			UserName=sys.argv[2]
+			GroupName=sys.argv[3]
+
+			# Calling the group creation function
+			t.attach_user_to_group(service="iam", UserName=sys.argv[2], GroupName=sys.argv[3])
+			
+
+		# Checking if the called function is attach_user_to_group function and we have the wrong number of command line argument
+		elif function == "attach_user_to_group" and num_commlinarg != 3:
+			print("Usage")
+
+		# Checking if the called function is Migrate_On_Prem_Users and we have the right number of command line arguments
+		elif function == "Migrate_On_Prem_Users" and num_commlinarg == 5:
+			
+			# Variable Declaration
+			GroupName =	sys.argv[2]
+			OP_NAME_INS = sys.argv[3]
+			RUNNER_INS = sys.argv[4]
+			OP_TYPE_INS = sys.argv[5]
+
+			# Calling the Migrate on pre user function
+			t.Migrate_On_Prem_Users(GroupName = sys.argv[2], OP_NAME_INS = sys.argv[3], RUNNER_INS = sys.argv[4], OP_TYPE_INS = sys.argv[5])
+
+
+
+		# Checking if the called function is create s3 bucket and we have the right number of command line arguments
+		elif function == "create_s3_bucket" and num_commlinarg == 3:
+
+			# Variable declaration
+			RoleArn = sys.argv[2]			
+			Bucket = sys.argv[3]
+
+			# Calling the create s3 bucket function
+			t.create_s3_bucket(RoleArn = sys.argv[2], Bucket = sys.argv[3])
+
+
+		# Checking if the called function is create s3 bucket and we have the right number of command line arguments
+		elif function == "create_s3_bucket" and num_commlinarg != 3:
+
+			print("USAGE: To create a bucket please enter 1)The ARN of the role we are using to create the bucket 2)The bucket names")
+			
+	
+		# Checking if the called function is delete user
+		elif function == "delete_user" and num_commlinarg == 2:
+			
+			# Variable declaration
+			UserName = sys.argv[2]
+
+			# Calling the delete user function
+			t.delete_user(service = "iam", UserName = sys.argv[2])
+
+		# Checking if the called function is delete s3 bucket and we have the right number of command line arguments
+		elif function == "delete_s3_bucket" and num_commlinarg == 3:
+
+			# Variable declaration
+			RoleArn = sys.argv[2]
+			Bucket = sys.argv[3]
+
+			# Calling the delete user function
+			t.delete_bucket(RoleArn = sys.argv[2], Bucket = sys.argv[3])
+
+		# Checking if the called function is delete s3 bucket and we have the right number of command line arguments
+		elif function == "delete_s3_bucket" and num_commlinarg != 3:
+			print("USAGE: To delete a bucket please enter the name the bucket to be deleted")
+
+		
+		# Checking if the called function is upload contents into bucket and we have the right number of command line arguments
+		elif function == "upload_s3_bucket" and num_commlinarg == 4:
+
+			#Variable Declaration
+			RoleArn = sys.argv[2]
+			Bucket=sys.argv[3]
+			file_to_upload=sys.argv[4]
+	
+
+			# Calling the upload function
+
+			t.upload_s3_bucket(RoleArn = sys.argv[2], file_to_upload=sys.argv[4], Bucket=sys.argv[3])
+
+
+		# Checking if the called function is upload contents into bucket and we have the right number of command line arguments
+		elif function == "upload_s3_bucket" and num_commlinarg != 4:
+			print("USAGE: To upload files into a bucket you need 1) the ARN of the role you are using the perform the upload, 2)The full path of the files to upload 3) The bucket to upload the files into")
+			print("To upload multiple files, put fullpath of files to be upload with double quotes> each file should be seperated by a comma")
+
+
+		# Checking if the called function is empty  bucket and we have the right number of command line arguments
+		elif function == "empty_s3_bucket" and num_commlinarg == 3:
+
+			# Variable declaration
+			RoleArn=sys.argv[2]
+			Bucket=sys.argv[3]
+
+			# Calling the empty bucket function
+			t.empty_S3_bucket(RoleArn=sys.argv[2], Bucket=sys.argv[3])
+
+
+		# Checking if the called function is empty  bucket and we have the right number of command line arguments
+		elif function == "empty_s3_bucket" and num_commlinarg != 3:
+			print("USAGE: Please enter 1)The ARN of the role performing this action and 2) The name of the bucket to delete.")
+
+
+		else:
+			print("Function Unknown")
+		
+
+
+
+
+
+
+
+
+
+
+
+
